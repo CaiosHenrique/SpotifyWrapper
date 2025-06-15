@@ -13,7 +13,7 @@ module.exports = function authorization(app) {
     console.log('Login request received');
 
     var state = generateRandomString(16);
-    var scope = 'user-read-private user-read-email';
+    var scope = 'user-read-private user-read-email ugc-image-upload user-read-currently-playing';
 
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({

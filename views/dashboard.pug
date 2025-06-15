@@ -1,0 +1,19 @@
+html
+  head
+    title Dashboard
+    link(rel="stylesheet", href="/dashboard.css")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap")
+  body
+    .header
+      h1 Dashboard
+    if item && item.album && item.album.images && item.album.images.length
+      .music-now
+        img.music-cover(src=item.album.images[0].url, alt="Album cover")
+        .music-info
+          span.playing-label Currently Playing:
+          span.music-title #{item.name}
+    else
+      .music-now Nothing is currently playing
+    .actions
+      a(href="/logout") Logout
+      a(href="/") Home
