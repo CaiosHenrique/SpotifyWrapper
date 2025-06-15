@@ -109,3 +109,27 @@ html
         }
       }
       setInterval(fetchCurrentlyPlaying, 5000);
+//- script(src="https://unpkg.com/color-thief/dist/color-thief.umd.js")
+//-     script.
+//-       function rgbToHex(r, g, b) {
+//-         return "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+//-       }
+//-       function setAccentFromCover() {
+//-         const img = document.querySelector('.music-cover');
+//-         if (!img) return;
+//-         if (img.complete) {
+//-           const colorThief = new ColorThief();
+//-           try {
+//-             const color = colorThief.getColor(img);
+//-             const accent = rgbToHex(...color);
+//-             document.documentElement.style.setProperty('--blue', accent);
+//-             document.documentElement.style.setProperty('--green', accent);
+//-           } catch (e) {}
+//-         } else {
+//-           img.addEventListener('load', setAccentFromCover);
+//-         }
+//-       }
+//-       setAccentFromCover();
+//-       // Atualiza cor ao trocar de música
+//-       const observer = new MutationObserver(setAccentFromCover);
+//-       observer.observe(document.querySelector('.music-now'), { childList: true, subtree: true });
