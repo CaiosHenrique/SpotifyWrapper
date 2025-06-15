@@ -85,20 +85,19 @@ h1 {
   text-align: center;
   text-shadow: none;
   display: flex;
-  flex-direction: row; /* Alterado de column para row */
+  flex-direction: row;
   align-items: center;
-  gap: 18px; /* Espaço entre imagem e texto */
+  gap: 18px;
 }
 
 .actions {
   display: flex;
-  justify-content: flex-start;   /* Alinha à esquerda */
+  justify-content: flex-start;
   gap: 16px;
   margin-top: 24px;
-  margin-left: 40px;             /* Espaço da borda esquerda */
+  margin-left: 40px; 
 }
 
-/* Garante que o botão "Genres" tenha a mesma aparência dos links */
 .actions a,
 .actions button {
   color: var(--blue);
@@ -117,6 +116,41 @@ h1 {
 
 .actions a:hover,
 .actions button:hover {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--green);
+}
+
+.actions form {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  margin: 0;
+  margin-left: 240px;
+}
+
+.actions input[type="text"] {
+  padding: 8px 10px;
+  border: 2px solid var(--blue);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.actions button[type="submit"] {
+  color: var(--blue);
+  background: var(--white);
+  border: 2px solid var(--blue);
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.actions button[type="submit"]:hover {
   background: var(--blue);
   color: var(--white);
   border-color: var(--green);
@@ -195,4 +229,71 @@ a:hover {
 
 .genre-list li:last-child {
   border-bottom: none;
+}
+
+#searchGenreInput:focus::placeholder {
+  color: transparent;
+}
+
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 110px);
+  gap: 24px;
+  width: 80%;
+  max-width: 520px;
+  margin: 0 auto 32px auto;
+  margin-top: 24px;
+}
+
+.collection-folder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  border: 2px solid var(--blue);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--gray);
+  text-decoration: none;
+  color: var(--blue);
+  font-family: inherit;
+  font-size: 1.1rem;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+  min-height: 0;
+}
+
+.collection-folder:hover {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--green);
+}
+
+.folder-icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.folder-label {
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.collection-folder.empty {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: default;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin: 0 auto 32px auto;
+  font-size: 1rem;
 }

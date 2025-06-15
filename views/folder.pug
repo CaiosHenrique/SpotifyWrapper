@@ -1,0 +1,18 @@
+html
+  head
+    title= genre.charAt(0).toUpperCase() + genre.slice(1)
+    link(rel="stylesheet", href="/dashboard.css")
+  body
+    .header
+      h1= genre.charAt(0).toUpperCase() + genre.slice(1)
+      a(href="/dashboard") Voltar ao Dashboard
+
+    if songs.length
+      ul
+        each song in songs
+          li
+            if song.image
+              img(src=song.image, alt="Album cover", width="60")
+            | #{song.title} - #{song.artist}
+    else
+      p Nenhuma música encontrada para este gênero.

@@ -6,9 +6,7 @@ dotenv.config();
 
 module.exports = function dashboard(app) {
     app.get('/dashboard', async function(req, res) {
-
         const token = req.session.access_token;
-
         let data = await getCurrentlyPlaying(token);
 
         if (!data && req.session.refresh_token) {
@@ -17,15 +15,39 @@ module.exports = function dashboard(app) {
             data = await getCurrentlyPlaying(token);
         }
 
+        const db = await getDb();
+        const collections = await db.listCollections().toArray();
+        
+        const allGenres = collections
+            .map(col => col.name)
+            .filter(name => name !== 'musicas' && !name.startsWith('system.'));
+
+        const page = parseInt(req.query.page) || 1;
+        const perPage = 9;
+        const totalPages = Math.ceil(allGenres.length / perPage);
+
         if (data) {
             const mainArtist = data.item.artists;
             const artist = await getArtistInformation(token, mainArtist[0].id);
 
-            return res.render('dashboard', { item: data.item, artist: artist});
+            return res.render('dashboard', { 
+                item: data.item, 
+                artist: artist, 
+                allGenres,
+                page,
+                totalPages
+            });
         } else {
-            return res.redirect('/');
+            return res.render('dashboard', { 
+                item: null, 
+                artist: {}, 
+                allGenres,
+                page,
+                totalPages
+            });
         }
     });
+    
     app.get('/api/currently-playing', async function(req, res) {
         const token = req.session.access_token;
         let data = await getCurrentlyPlaying(token);
