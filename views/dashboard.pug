@@ -6,14 +6,80 @@ html
   body
     .header
       h1 Dashboard
+
+    .actions
+      a(href="/logout") Logout
+      a(href="/") Home
+      button#toggleGenres(type="button") Genres
+
     if item && item.album && item.album.images && item.album.images.length
       .music-now
         img.music-cover(src=item.album.images[0].url, alt="Album cover")
         .music-info
           span.playing-label Currently Playing:
+          span.music-artist #{artist.name}
           span.music-title #{item.name}
     else
       .music-now Nothing is currently playing
-    .actions
-      a(href="/logout") Logout
-      a(href="/") Home
+
+    .sidebar#sidebarGenres.sidebar--visible
+      h2 Genres
+      if artist.genres && artist.genres.length
+        ul.genre-list
+          each genre in artist.genres
+            li= genre.charAt(0).toUpperCase() + genre.slice(1)
+      else
+        p No genres found.
+
+    // Fim do else
+    script.
+      let currentTrackId = null;
+
+      const btn = document.getElementById('toggleGenres');
+      const sidebar = document.getElementById('sidebarGenres');
+      btn.addEventListener('click', () => {
+        sidebar.classList.toggle('sidebar--visible');
+      });
+
+      async function fetchCurrentlyPlaying() {
+        console.log('Verificando música atual...');
+        const res = await fetch('/api/currently-playing');
+        const data = await res.json();
+        const musicNow = document.querySelector('.music-now');
+        const sidebar = document.getElementById('sidebarGenres');
+        if (data.item && data.artist) {
+          if (data.item.id !== currentTrackId) {
+            console.log('Atualizando música:', data.item.name);
+            currentTrackId = data.item.id;
+            musicNow.innerHTML = `
+              <img class="music-cover" src="${data.item.album.images[0].url}" alt="Album cover">
+              <div class="music-info">
+                <span class="playing-label">Currently Playing:</span>
+                <span class="music-artist">${data.artist.name}</span>
+                <span class="music-title">${data.item.name}</span>
+              </div>
+            `;
+            let genresHtml = '<h2>Genres</h2>';
+            if (data.artist.genres && data.artist.genres.length) {
+              genresHtml += '<ul class="genre-list">';
+              data.artist.genres.forEach(genre => {
+                genresHtml += `<li>${genre.charAt(0).toUpperCase() + genre.slice(1)}</li>`;
+              });
+              genresHtml += '</ul>';
+            } else {
+              genresHtml += '<p>No genres found.</p>';
+            }
+            sidebar.innerHTML = genresHtml;
+          } else {
+            console.log('Música não mudou, nada a atualizar.');
+          }
+        } else {
+          if (currentTrackId !== null) {
+            console.log('Nenhuma música tocando');
+            musicNow.innerHTML = 'Nothing is currently playing';
+            sidebar.innerHTML = '<h2>Genres</h2><p>No genres found.</p>';
+            currentTrackId = null;
+          }
+        }
+      }
+      setInterval(fetchCurrentlyPlaying, 5000);

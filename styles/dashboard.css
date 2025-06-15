@@ -21,7 +21,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--white);
+  background: var(--panel);
   border-bottom: 2px solid var(--blue);
   padding: 32px 0 16px 0;
   gap: 32px;
@@ -32,6 +32,7 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
+  max-width: 400px;
   font-family: 'Press Start 2P', monospace, 'Courier New', Courier;
   font-size: 1.1rem;
   text-shadow:
@@ -39,6 +40,15 @@ body {
      0.7px -0.7px 0 #000,
     -0.7px  0.7px 0 #000,
      0.7px  0.7px 0 #000;
+}
+
+.music-artist,
+.music-title {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .music-cover {
@@ -66,7 +76,7 @@ h1 {
   background: var(--panel);
   border: 2px solid var(--green);
   padding: 18px 10px;
-  margin: 32px auto 16px auto;
+  margin:16px auto 16px auto;
   width: 80%;
   max-width: 520px;
   font-size: 1rem;
@@ -82,9 +92,34 @@ h1 {
 
 .actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;   /* Alinha à esquerda */
   gap: 16px;
   margin-top: 24px;
+  margin-left: 40px;             /* Espaço da borda esquerda */
+}
+
+/* Garante que o botão "Genres" tenha a mesma aparência dos links */
+.actions a,
+.actions button {
+  color: var(--blue);
+  background: var(--white);
+  border: 2px solid var(--blue);
+  padding: 10px 18px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px var(--gray);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  display: inline-block;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.actions a:hover,
+.actions button:hover {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--green);
 }
 
 a {
@@ -105,4 +140,59 @@ a:hover {
   background: var(--blue);
   color: var(--white);
   border-color: var(--green);
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 300px;
+  background: var(--panel);
+  border-left: 2px solid var(--blue);
+  border-radius: 0;
+  box-shadow: -2px 0 12px var(--gray);
+  padding: 32px 24px;
+  font-family: 'Press Start 2P', monospace, 'Courier New', Courier;
+  font-size: 0.95rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(.77,0,.18,1), opacity 0.3s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar.sidebar--visible {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar h2 {
+  color: var(--blue);
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.genre-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.genre-list li {
+  color: var(--green);
+  word-break: break-word;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--blue);
+  text-align: left;
+}
+
+.genre-list li:last-child {
+  border-bottom: none;
 }

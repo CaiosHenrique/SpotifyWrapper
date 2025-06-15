@@ -9,23 +9,43 @@ module.exports = function dashboard(app) {
 
         const token = req.session.access_token;
 
-        await getCurrentlyPlaying(token)
-        .then(async data => {
-            if (data) {
-                console.log('Currently playing:', data.item);
+        let data = await getCurrentlyPlaying(token);
 
-                const artist = data.item.artists;
-                
-                console.log('Artist:', artist[0].id);
-                console.log('token:', token);
-                const artistResponse = await getArtistInformation(token, artist[0].id);
-                console.log('Artist information:', artistResponse);
+        if (!data && req.session.refresh_token) {
+            await refreshAccessToken();
+            token = req.session.access_token;
+            data = await getCurrentlyPlaying(token);
+        }
 
-                res.render('dashboard', { item: data.item });   
-            }
-        });
-        
-        async function getCurrentlyPlaying(token) {
+        if (data) {
+            const mainArtist = data.item.artists;
+            const artist = await getArtistInformation(token, mainArtist[0].id);
+
+            return res.render('dashboard', { item: data.item, artist: artist});
+        } else {
+            return res.redirect('/');
+        }
+    });
+    app.get('/api/currently-playing', async function(req, res) {
+        const token = req.session.access_token;
+        let data = await getCurrentlyPlaying(token);
+
+        if (!data && req.session.refresh_token) {
+            await refreshAccessToken();
+            token = req.session.access_token;
+            data = await getCurrentlyPlaying(token);
+        }
+
+        if (data) {
+            const mainArtist = data.item.artists;
+            const artist = await getArtistInformation(token, mainArtist[0].id);
+            res.json({ item: data.item, artist });
+        } else {
+            res.json({ item: null });
+        }
+    });
+
+     async function getCurrentlyPlaying(token) {
             const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -33,8 +53,6 @@ module.exports = function dashboard(app) {
             });
 
             if (response.status === 401) {
-                // Redireciona para a home se não autorizado
-                res.redirect('/');
                 return null;
             }
 
@@ -54,5 +72,29 @@ module.exports = function dashboard(app) {
             });
             return response.json();
         };
-    });
+
+        async function refreshAccessToken() {
+            console.log('Refreshing access token...');
+            const refreshToken = req.session.refresh_token;
+            const url = "https://accounts.spotify.com/api/token";
+
+            const payload = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    grant_type: 'refresh_token',
+                    refresh_token: refreshToken,
+                    client_id: process.env.SPOTIFY_CLIENT_ID
+                }),
+            };
+            const body = await fetch(url, payload);
+            const response = await body.json();
+
+            req.session.access_token = response.access_token;
+            if (response.refresh_token) {
+                req.session.refresh_token = response.refresh_token;
+            }
+        }
 };
