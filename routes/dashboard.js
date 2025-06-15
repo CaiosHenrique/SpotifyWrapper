@@ -1,11 +1,11 @@
 const dotenv = require('dotenv');
 const { get } = require('http');
+const {getDb} = require('../config/dbConnection');
 
 dotenv.config();
 
 module.exports = function dashboard(app) {
     app.get('/dashboard', async function(req, res) {
-        // Here you can add more functionality, like fetching user data from Spotify
 
         const token = req.session.access_token;
 
@@ -39,6 +39,39 @@ module.exports = function dashboard(app) {
         if (data) {
             const mainArtist = data.item.artists;
             const artist = await getArtistInformation(token, mainArtist[0].id);
+            const db = await getDb();
+
+            const musicasCollection = db.collection('musicas');
+            const musicaExistenteGeral = await musicasCollection.findOne({
+                title: data.item.name,
+                artist: mainArtist[0].name
+            });
+            if (!musicaExistenteGeral) {
+                await musicasCollection.insertOne({
+                    title: data.item.name,
+                    artist: mainArtist[0].name,
+                    genres: artist.genres,
+                    image: data.item.album.images[0]?.url
+                });
+            }
+
+            for (const genre of artist.genres) {
+                const collection = db.collection(genre);
+                const musicaExistente = await collection.findOne({
+                    title: data.item.name,
+                    artist: mainArtist[0].name
+            });
+            if (!musicaExistente) {
+                await collection.insertOne({
+                    title: data.item.name,
+                    artist: mainArtist[0].name,
+                    genres: artist.genres,
+                    image: data.item.album.images[0]?.url
+                });
+                } else {
+                    console.log('Música já existe no banco de dados');
+                }
+            }
             res.json({ item: data.item, artist });
         } else {
             res.json({ item: null });
