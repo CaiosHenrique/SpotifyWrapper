@@ -10,43 +10,61 @@ html
     .actions
       a(href="/logout") Logout
       a(href="/") Home
-      button#toggleGenres(type="button") Genres
+      button#toggleGenres(type="button") Toggle Genres
       form#searchGenreForm(action="/find/collection", method="get", style="display:inline;")
         input#searchGenreInput(type="text", name="genre", placeholder="Buscar pasta...", required)
         button(type="submit") Buscar
 
-    if item && item.album && item.album.images && item.album.images.length
+  .main-layout
+    .recent-sidebar
+      h2 Recently Played
+      ul#recentTracks
+        if recentlyPlayed && recentlyPlayed.length
+          each track in recentlyPlayed
+            - var imgUrl = (track.album.images && track.album.images.length > 2) ? track.album.images[2].url : (track.album.images && track.album.images.length ? track.album.images[0].url : '');
+            li.recent-track
+              img(src=imgUrl, alt="cover", width="40")
+              .recent-info
+                span.recent-artist= track.artists[0].name
+                br
+                span.recent-title= track.name
+        else
+          li No recent tracks found.
+
+    .container-main
       .music-now
-        img.music-cover(src=item.album.images[0].url, alt="Album cover")
-        .music-info
-          span.playing-label Currently Playing:
-          span.music-artist #{artist.name}
-          span.music-title #{item.name}
-    else
-      .music-now Nothing is currently playing
+        if item && item.album && item.album.images && item.album.images.length
+          img.music-cover(src=item.album.images[0].url, alt="Album cover")
+          .music-info
+            span.playing-label Currently Playing:
+            span.music-artist #{artist.name}
+            span.music-title #{item.name}
+        else
+          | Nothing is currently playing
+          
+      .collections-area
+        .collections-grid
+          - const startIdx = ((typeof page !== 'undefined' ? page : 1) - 1) * 9;
+          - const genresPage = allGenres && allGenres.length ? allGenres.slice(startIdx, startIdx + 9) : Array(9).fill(null);
+          each genre, idx in genresPage
+            if genre
+              a.collection-folder(href=`/collection/${encodeURIComponent(genre)}`)
+                span.folder-icon 🗂️
+                span.folder-label= genre.charAt(0).toUpperCase() + genre.slice(1)
+            else
+              .collection-folder.empty
 
-    .collections-grid
-      - const startIdx = ((typeof page !== 'undefined' ? page : 1) - 1) * 9;
-      - const genresPage = allGenres && allGenres.length ? allGenres.slice(startIdx, startIdx + 9) : Array(9).fill(null);
-      each genre, idx in genresPage
-        if genre
-          a.collection-folder(href=`/collection/${encodeURIComponent(genre)}`)
-            span.folder-icon 🗂️
-            span.folder-label= genre.charAt(0).toUpperCase() + genre.slice(1)
-        else
-          .collection-folder.empty
-
-    if totalPages && totalPages > 1
-      .pagination
-        if page > 1
-          a(href=`?page=${page-1}`) Previous
-        else
-          span.disabled Previous
-        span.page-info Page #{page} of #{totalPages}
-        if page < totalPages
-          a(href=`?page=${page+1}`) Next
-        else
-          span.disabled Next
+        if totalPages && totalPages > 1
+          .pagination
+            if page > 1
+              a(href=`?page=${page-1}`) Previous
+            else
+              span.disabled Previous
+            span.page-info Page #{page} of #{totalPages}
+            if page < totalPages
+              a(href=`?page=${page+1}`) Next
+            else
+              span.disabled Next
 
     .sidebar#sidebarGenres.sidebar--visible
       h2 Genres

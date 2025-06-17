@@ -8,12 +8,11 @@ const redirectUri = process.env.SPOTIFY_REDIRECT_URI;
 
 module.exports = function authorization(app) {
    console.log('Authorization module loaded');
-
     app.get('/login', function(req, res) {
     console.log('Login request received');
 
     var state = generateRandomString(16);
-    var scope = 'user-read-private user-read-email ugc-image-upload user-read-currently-playing';
+    var scope = 'user-read-private user-read-email ugc-image-upload user-read-currently-playing user-read-recently-played';
 
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
