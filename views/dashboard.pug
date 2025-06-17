@@ -20,14 +20,15 @@ html
       h2 Recently Played
       ul#recentTracks
         if recentlyPlayed && recentlyPlayed.length
-          each track in recentlyPlayed
-            - var imgUrl = (track.album.images && track.album.images.length > 2) ? track.album.images[2].url : (track.album.images && track.album.images.length ? track.album.images[0].url : '');
-            li.recent-track
-              img(src=imgUrl, alt="cover", width="40")
-              .recent-info
-                span.recent-artist= track.artists[0].name
-                br
-                span.recent-title= track.name
+          each track, idx in recentlyPlayed
+            if idx < 9
+              - var imgUrl = (track.album.images && track.album.images.length > 2) ? track.album.images[2].url : (track.album.images && track.album.images.length ? track.album.images[0].url : '');
+              li.recent-track
+                img(src=imgUrl, alt="cover", width="40")
+                .recent-info
+                  span.recent-artist= track.artists[0].name
+                  br
+                  span.recent-title= track.name
         else
           li No recent tracks found.
 
@@ -127,27 +128,3 @@ html
         }
       }
       setInterval(fetchCurrentlyPlaying, 5000);
-//- script(src="https://unpkg.com/color-thief/dist/color-thief.umd.js")
-//-     script.
-//-       function rgbToHex(r, g, b) {
-//-         return "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
-//-       }
-//-       function setAccentFromCover() {
-//-         const img = document.querySelector('.music-cover');
-//-         if (!img) return;
-//-         if (img.complete) {
-//-           const colorThief = new ColorThief();
-//-           try {
-//-             const color = colorThief.getColor(img);
-//-             const accent = rgbToHex(...color);
-//-             document.documentElement.style.setProperty('--blue', accent);
-//-             document.documentElement.style.setProperty('--green', accent);
-//-           } catch (e) {}
-//-         } else {
-//-           img.addEventListener('load', setAccentFromCover);
-//-         }
-//-       }
-//-       setAccentFromCover();
-//-       // Atualiza cor ao trocar de música
-//-       const observer = new MutationObserver(setAccentFromCover);
-//-       observer.observe(document.querySelector('.music-now'), { childList: true, subtree: true });

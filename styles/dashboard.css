@@ -2,13 +2,13 @@
   --blue: #7fd6ff;
   --white: #fff;
   --green: #7cffb2;
-  --bg: #f8fafd;
   --panel: #f0f2f5;
   --gray: #e0e0e0;
+  --black: #222;
 }
 
 body {
-  background: var(--bg);
+  background: var(--black);
   color: #222;
   font-family: 'Press Start 2P', monospace, 'Courier New', Courier;
   margin: 0;
@@ -21,7 +21,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--panel);
+  background: var(--black);
   border-bottom: 2px solid var(--blue);
   padding: 32px 0 16px 0;
   gap: 32px;
@@ -56,9 +56,9 @@ body {
   height: 90px;
   object-fit: cover;
   border-radius: 10px;
-  background: #e0ffe8;
+  background: var(--panel);
   margin: 0;
-  box-shadow: 0 2px 8px var(--gray);
+  
 }
 
 h1 {
@@ -73,7 +73,7 @@ h1 {
 
 .music-now {
   color: var(--green);
-  background: var(--panel);
+  background: var(--black);
   border: 2px solid var(--green);
   padding: 18px 10px;
   margin: 16px auto 16px auto;
@@ -81,7 +81,6 @@ h1 {
   max-width: 520px;
   font-size: 1rem;
   border-radius: 10px;
-  box-shadow: 0 2px 12px var(--gray);
   text-align: center;
   text-shadow: none;
   display: flex;
@@ -101,13 +100,13 @@ h1 {
 .actions a,
 .actions button {
   color: var(--blue);
-  background: var(--white);
+  background: var(--black);
   border: 2px solid var(--blue);
   padding: 10px 18px;
   text-decoration: none;
   font-size: 0.9rem;
   border-radius: 6px;
-  box-shadow: 0 2px 8px var(--gray);
+  
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   display: inline-block;
   font-family: inherit;
@@ -131,6 +130,8 @@ h1 {
 
 .actions input[type="text"] {
   padding: 8px 10px;
+  background: var(--black);
+  color: #fff;
   border: 2px solid var(--blue);
   border-radius: 6px;
   font-family: inherit;
@@ -140,7 +141,7 @@ h1 {
 
 .actions button[type="submit"] {
   color: var(--blue);
-  background: var(--white);
+  background: var(--black);
   border: 2px solid var(--blue);
   padding: 10px 18px;
   border-radius: 6px;
@@ -158,13 +159,13 @@ h1 {
 
 a {
   color: var(--blue);
-  background: var(--white);
+  background: var(--black);
   border: 2px solid var(--blue);
   padding: 10px 18px;
   text-decoration: none;
   font-size: 0.9rem;
   border-radius: 6px;
-  box-shadow: 0 2px 8px var(--gray);
+  
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   display: inline-block;
   font-family: inherit;
@@ -182,10 +183,9 @@ a:hover {
   right: 0;
   height: 100vh;
   width: 300px;
-  background: var(--panel);
+  background: var(--black);
   border-left: 2px solid var(--blue);
   border-radius: 0;
-  box-shadow: -2px 0 12px var(--gray);
   padding: 32px 24px;
   font-family: 'Press Start 2P', monospace, 'Courier New', Courier;
   font-size: 0.95rem;
@@ -220,7 +220,7 @@ a:hover {
 }
 
 .genre-list li {
-  color: var(--green);
+  color: var(--blue);
   word-break: break-word;
   padding: 16px 0;
   border-bottom: 1px solid var(--blue);
@@ -260,10 +260,10 @@ a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--panel);
+  background: var(--black);
   border: 2px solid var(--blue);
   border-radius: 10px;
-  box-shadow: 0 2px 8px var(--gray);
+  
   text-decoration: none;
   color: var(--blue);
   font-family: inherit;
@@ -324,6 +324,7 @@ a:hover {
 }
 
 .recent-sidebar {
+  color: var(--blue);
   width: 100%;
   max-width: 320px;
   margin: 0;

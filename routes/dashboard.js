@@ -8,6 +8,11 @@ module.exports = function dashboard(app) {
     app.get('/dashboard', async function(req, res) {
         console.log('Dashboard request received');
         const token = req.session.access_token;
+        
+        if (token  === undefined) {
+            res.redirect('/login');
+            return;
+        }
 
         let data = await getCurrentlyPlaying(token);
         let recentlyPlayed = await getRecentlyPlayed(token);
@@ -51,7 +56,6 @@ module.exports = function dashboard(app) {
                 totalPages,
                 recentlyPlayed,
             });
-            
         }
     });
     
