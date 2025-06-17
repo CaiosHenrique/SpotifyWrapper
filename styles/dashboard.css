@@ -199,6 +199,13 @@ a:hover {
   pointer-events: none;
 }
 
+p {
+  color: var(--blue);
+  font-size: 0.9rem;
+  margin: 0;
+  margin-bottom: 16px;
+}
+
 .sidebar.sidebar--visible {
   transform: translateX(0);
   opacity: 1;
