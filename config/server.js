@@ -10,11 +10,13 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 app.use(express.static('styles'));
+app.use(express.static('images'));
+
 app.use(session({
     secret:  process.env.SESSION_SECRET || null,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // use true se for HTTPS
+    cookie: { secure: false }
 }));
 
 consign()

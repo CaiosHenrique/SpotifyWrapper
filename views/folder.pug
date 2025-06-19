@@ -1,18 +1,29 @@
 html
   head
     title= genre.charAt(0).toUpperCase() + genre.slice(1)
-    link(rel="stylesheet", href="/dashboard.css")
+    link(rel="stylesheet", href="/folder.css")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap")
   body
     .header
       h1= genre.charAt(0).toUpperCase() + genre.slice(1)
       a(href="/dashboard") Voltar ao Dashboard
 
+    if favoriteArtist
+      div.favorite-artist
+        | #{genre.charAt(0).toUpperCase() + genre.slice(1)} Favorite Artist: #{favoriteArtist}
+
     if songs.length
       ul
         each song in songs
           li
-            if song.image
-              img(src=song.image, alt="Album cover", width="60")
-            | #{song.title} - #{song.artist}
-    else
-      p Nenhuma música encontrada para este gênero.
+            .song-info
+              if song.image
+                img(src=song.image, alt="Album cover", width="60")
+              .song-meta
+                span.artist #{song.artist}
+                br
+                span.title #{song.title}
+
+    .footer-image
+      a(href="https://github.com/CaiosHenrique", target="_blank")
+        img(src="/Caio_Click.png")

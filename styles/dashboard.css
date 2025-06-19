@@ -165,7 +165,7 @@ a {
   text-decoration: none;
   font-size: 0.9rem;
   border-radius: 6px;
-  
+  z-index: 11;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   display: inline-block;
   font-family: inherit;
@@ -270,9 +270,8 @@ p {
   background: var(--black);
   border: 2px solid var(--blue);
   border-radius: 10px;
-  
   text-decoration: none;
-  color: var(--blue);
+  color: var(--white);
   font-family: inherit;
   font-size: 1.1rem;
   transition: background 0.2s, border-color 0.2s;
@@ -399,4 +398,26 @@ p {
   margin-top: 2px;
 }
 
+.footer-image {
+  position: fixed;
+  bottom: 8px;
+  left: 75%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+  z-index: 10;
+}
 
+.footer-image img {
+  max-width: 200px;
+  height: auto;
+  opacity: 0.85;
+}
+
+.footer-image a {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+  padding: none;
+}

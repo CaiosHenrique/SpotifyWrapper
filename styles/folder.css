@@ -1,0 +1,123 @@
+:root {
+  --blue: #7fd6ff;
+  --white: #fff;
+  --green: #7cffb2;
+  --panel: #f0f2f5;
+  --gray: #e0e0e0;
+  --black: #222;
+}
+
+body {
+  background: var(--black);
+  color: #222;
+  font-family: 'Press Start 2P', monospace, 'Courier New', Courier;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  letter-spacing: 1px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--black);
+  border-bottom: 2px solid var(--blue);
+  padding: 32px 0 16px 0;
+  gap: 32px;
+}
+
+h1 {
+  color: var(--blue);
+  text-shadow: none;
+  font-size: 2rem;
+  margin: 0;
+  letter-spacing: 2px;
+  background: none;
+  border: none;
+}
+
+a {
+  color: var(--blue);
+  background: var(--black);
+  border: 2px solid var(--blue);
+  padding: 10px 18px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  display: inline-block;
+  font-family: inherit;
+}
+
+a:hover{
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--green);
+}
+
+ul li{
+    list-style: none;
+    color: var(--white);
+}
+
+.song-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.song-info img {
+  border-radius: 6px;
+  border: 2px solid var(--blue);
+  background: var(--gray);
+}
+
+.song-meta {
+  display: flex;
+  flex-direction: column;
+  color: var(--white);
+}
+
+.song-meta .artist {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.song-meta .title {
+  font-size: 0.95rem;
+  color: var(--green);
+}
+
+.favorite-artist {
+  color: #00ff99;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.footer-image {
+  position: fixed;
+  bottom: 8px;
+  left: 75%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+  z-index: 10;
+}
+
+.footer-image img {
+  max-width: 200px;
+  height: auto;
+  opacity: 0.85;
+}
+
+.footer-image a {
+  cursor: pointer;
+  display: inline-block;
+  border: none;
+  background: none;
+}
