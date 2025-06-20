@@ -16,7 +16,6 @@ module.exports = function dashboard(app) {
 
         let data = await getCurrentlyPlaying(token);
         let recentlyPlayed = await getRecentlyPlayed(token);
-        console.log('recentlyPlayed', recentlyPlayed);
 
         if (!data && req.session.refresh_token) {
             await refreshAccessToken();
@@ -76,11 +75,13 @@ module.exports = function dashboard(app) {
 
             const musicasCollection = db.collection('musicas');
             const musicaExistenteGeral = await musicasCollection.findOne({
+                id: data.item.id,
                 title: data.item.name,
                 artist: mainArtist[0].name
             });
             if (!musicaExistenteGeral) {
                 await musicasCollection.insertOne({
+                    id: data.item.id,
                     title: data.item.name,
                     artist: mainArtist[0].name,
                     genres: artist.genres,
@@ -96,6 +97,7 @@ module.exports = function dashboard(app) {
             });
             if (!musicaExistente) {
                 await collection.insertOne({
+                    id: data.item.id,
                     title: data.item.name,
                     artist: mainArtist[0].name,
                     genres: artist.genres,

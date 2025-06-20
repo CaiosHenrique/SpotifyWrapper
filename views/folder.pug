@@ -24,6 +24,11 @@ html
                 br
                 span.title #{song.title}
 
+    form(action="/create/playlist", method="POST")
+      input(type="hidden", name="genre", value=genre)
+      button(type="submit") Criar Playlist com esta pasta
+
+
     .footer-image
       a(href="https://github.com/CaiosHenrique", target="_blank")
         img(src="/Caio_Click.png")
