@@ -12,6 +12,11 @@ html
       div.favorite-artist
         | #{genre.charAt(0).toUpperCase() + genre.slice(1)} Favorite Artist: #{favoriteArtist}
 
+    .center-btn
+      form(action="/create/playlist", method="POST")
+        input(type="hidden", name="genre", value=genre)
+        button(type="submit", class="main-btn") Criar Playlist com esta pasta
+
     if songs.length
       ul
         each song in songs
@@ -23,11 +28,6 @@ html
                 span.artist #{song.artist}
                 br
                 span.title #{song.title}
-
-    form(action="/create/playlist", method="POST")
-      input(type="hidden", name="genre", value=genre)
-      button(type="submit") Criar Playlist com esta pasta
-
 
     .footer-image
       a(href="https://github.com/CaiosHenrique", target="_blank")

@@ -121,3 +121,32 @@ ul li{
   border: none;
   background: none;
 }
+
+.main-btn {
+  color: var(--blue);
+  background: var(--black);
+  border: 2px solid var(--blue);
+  padding: 14px 32px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  margin-top: 8px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.main-btn:hover {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--green);
+}
+
+  
+.center-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
