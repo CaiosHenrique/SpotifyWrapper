@@ -138,15 +138,3 @@ Esta é a primeira versão estável do SpotifyWrapper. Inclui todas as funcional
 ## Contribuidores
 
 - **CaiosHenrique** - Desenvolvimento inicial e arquitetura
-- **GitHub Copilot** - Documentação e análise de código
-
-## Licença
-
-Este projeto está licenciado sob a Licença ISC - veja o arquivo LICENSE para detalhes.
-
-## Agradecimentos
-
-- Spotify por fornecer uma API robusta
-- Comunidade Node.js pelas excelentes bibliotecas
-- Press Start 2P font pelos criadores
-- MongoDB pela solução de banco de dados

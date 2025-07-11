@@ -248,7 +248,3 @@ Este projeto está sob a licença ISC.
 ## Autor
 
 Desenvolvido por [CaiosHenrique](https://github.com/CaiosHenrique)
-
----
-
-*Documentação gerada automaticamente baseada na análise do código fonte*
