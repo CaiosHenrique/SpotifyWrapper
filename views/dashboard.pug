@@ -91,10 +91,13 @@ html
 
       async function fetchCurrentlyPlaying() {
         console.log('Verificando música atual...');
+
         const res = await fetch('/api/currently-playing');
         const data = await res.json();
+
         const musicNow = document.querySelector('.music-now');
         const sidebar = document.getElementById('sidebarGenres');
+
         if (data.item && data.artist) {
           if (data.item.id !== currentTrackId) {
             console.log('Atualizando música:', data.item.name);
@@ -107,7 +110,9 @@ html
                 <span class="music-title">${data.item.name}</span>
               </div>
             `;
+
             let genresHtml = '<h2>Genres</h2>';
+            
             if (data.artist.genres && data.artist.genres.length) {
               genresHtml += '<ul class="genre-list">';
               data.artist.genres.forEach(genre => {

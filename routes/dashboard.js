@@ -7,7 +7,7 @@ dotenv.config();
 module.exports = function dashboard(app) {
     app.get('/dashboard', async function(req, res) {
         console.log('Dashboard request received');
-        const token = req.session.access_token;
+        let token = req.session.access_token;
         
         if (token  === undefined) {
             res.redirect('/login');
@@ -18,7 +18,7 @@ module.exports = function dashboard(app) {
         let recentlyPlayed = await getRecentlyPlayed(token);
 
         if (!data && req.session.refresh_token) {
-            await refreshAccessToken();
+            await refreshAccessToken(req);
             token = req.session.access_token;
             data = await getCurrentlyPlaying(token);
         }
@@ -59,11 +59,11 @@ module.exports = function dashboard(app) {
     });
     
     app.get('/api/currently-playing', async function(req, res) {
-        const token = req.session.access_token;
+        let token = req.session.access_token;
         let data = await getCurrentlyPlaying(token);
 
         if (!data && req.session.refresh_token) {
-            await refreshAccessToken();
+            await refreshAccessToken(req);
             token = req.session.access_token;
             data = await getCurrentlyPlaying(token);
         }
@@ -128,7 +128,11 @@ module.exports = function dashboard(app) {
             throw new Error(`Spotify API error: ${response.status}`);
         }
 
-        const data = await response.json();
+        const text = await response.text();
+        if (!text) {
+            return null;
+        }
+        const data = JSON.parse(text);
         return data;
     }
 
@@ -141,7 +145,7 @@ module.exports = function dashboard(app) {
         return response.json();
     };
 
-    async function refreshAccessToken() {
+    async function refreshAccessToken(req) {
         console.log('Refreshing access token...');
         const refreshToken = req.session.refresh_token;
         const url = "https://accounts.spotify.com/api/token";

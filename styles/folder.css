@@ -94,6 +94,7 @@ ul li{
 .favorite-artist {
   color: #00ff99;
   font-weight: bold;
+  margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
   font-size: 1.1rem;
